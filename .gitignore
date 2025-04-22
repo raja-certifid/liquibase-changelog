@@ -1,0 +1,72 @@
+# Liquibase specific
+liquibase.jar
+mysql-connector-j.jar
+*.log
+liquibase
+liquibase.bat
+ABOUT.txt
+GETTING_STARTED.txt
+LICENSE.txt
+README.txt
+UNINSTALL.txt
+changelog.txt
+examples/
+internal/
+lib/
+licenses/
+*.zip
+
+# Database
+*.sql.gz
+*.dump
+*.backup
+
+# IDE - VSCode
+.vscode/
+*.code-workspace
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# IDE - Eclipse
+.classpath
+.project
+.settings/
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker
+mysql_data/
+
+# Dependencies
+node_modules/
+vendor/
+
+# Temporary files
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log* 
