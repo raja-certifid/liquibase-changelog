@@ -1,0 +1,35 @@
+databaseChangeLog:
+- changeSet:
+    id: 6
+    author: BDFW
+    changes:
+    - createTable:
+        tableName: Shipment
+        columns:
+        - column:
+            name: shipment_id
+            type: int
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: order_id
+            type: int
+        - column:
+            name: shipment_address_hash_key
+            type: binary(32)
+        - column:
+            name: created_at
+            type: datetime
+        - column:
+            name: email_sent
+            type: int
+        - column:
+            name: total_qty
+            type: int
+        - column:
+            name: total_weight
+            type: decimal(10,2)
+    rollback:
+    - dropTable:
+        tableName: Shipment

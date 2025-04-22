@@ -1,0 +1,29 @@
+databaseChangeLog:
+- changeSet:
+    id: 8
+    author: BDFW
+    changes:
+    - createTable:
+        tableName: ShipmentTrack
+        columns:
+        - column:
+            name: shipment_track_id
+            type: int
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: shipment_id
+            type: int
+        - column:
+            name: track_number
+            type: varchar(50)
+        - column:
+            name: title
+            type: varchar(100)
+        - column:
+            name: carrier_code
+            type: varchar(100)
+    rollback:
+    - dropTable:
+        tableName: ShipmentTrack

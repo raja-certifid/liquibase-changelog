@@ -1,0 +1,23 @@
+databaseChangeLog:
+- changeSet:
+    id: 12
+    author: BDFW
+    changes:
+    - createTable:
+        tableName: OrderSourceSelectionSummary
+        columns:
+        - column:
+            name: order_source_selection_summary_id
+            type: int
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: order_id
+            type: int
+        - column:
+            name: shippable
+            type: bit(1)
+    rollback:
+    - dropTable:
+        tableName: OrderSourceSelectionSummary

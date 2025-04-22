@@ -1,0 +1,59 @@
+databaseChangeLog:
+- changeSet:
+    id: 2
+    author: BDFW
+    changes:
+    - createTable:
+        tableName: Address
+        columns:
+        - column:
+            name: address_hash_key
+            type: binary(32)
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: city
+            type: varchar(50)
+        - column:
+            name: customer_address_id
+            type: int
+        - column:
+            name: country_id
+            type: varchar(50)
+        - column:
+            name: email
+            type: varchar(200)
+        - column:
+            name: first_name
+            type: varchar(100)
+        - column:
+            name: last_name
+            type: varchar(100)
+        - column:
+            name: post_code
+            type: varchar(50)
+        - column:
+            name: region
+            type: varchar(100)
+        - column:
+            name: region_code
+            type: varchar(50)
+        - column:
+            name: region_id
+            type: int
+        - column:
+            name: street_1
+            type: varchar(100)
+        - column:
+            name: street_2
+            type: varchar(100)
+        - column:
+            name: street_3
+            type: varchar(100)
+        - column:
+            name: telephone
+            type: varchar(50)
+    rollback:
+    - dropTable:
+        tableName: Address

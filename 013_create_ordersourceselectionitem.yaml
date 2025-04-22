@@ -1,0 +1,29 @@
+databaseChangeLog:
+- changeSet:
+    id: 13
+    author: BDFW
+    changes:
+    - createTable:
+        tableName: OrderSourceSelectionItem
+        columns:
+        - column:
+            name: order_source_selection_item_id
+            type: int
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: order_source_selection_summary_id
+            type: int
+        - column:
+            name: source_code
+            type: varchar(100)
+        - column:
+            name: sku
+            type: varchar(255)
+        - column:
+            name: qty_to_deduct
+            type: int
+    rollback:
+    - dropTable:
+        tableName: OrderSourceSelectionItem

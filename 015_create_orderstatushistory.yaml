@@ -1,0 +1,38 @@
+databaseChangeLog:
+- changeSet:
+    id: 15
+    author: BDFW
+    changes:
+    - createTable:
+        tableName: OrderStatusHistory
+        columns:
+        - column:
+            name: order_status_history_id
+            type: int
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: order_id
+            type: int
+        - column:
+            name: comment
+            type: varchar(500)
+        - column:
+            name: created_at
+            type: datetime
+        - column:
+            name: entity_name
+            type: varchar(100)
+        - column:
+            name: is_customer_notified
+            type: bit(1)
+        - column:
+            name: is_visible_on_front
+            type: bit(1)
+        - column:
+            name: status
+            type: varchar(100)
+    rollback:
+    - dropTable:
+        tableName: OrderStatusHistory

@@ -1,0 +1,29 @@
+databaseChangeLog:
+- changeSet:
+    id: 11
+    author: BDFW
+    changes:
+    - createTable:
+        tableName: OrderAppliedTaxItem
+        columns:
+        - column:
+            name: order_applied_tax_item_id
+            type: int
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: quote_item_id
+            type: int
+        - column:
+            name: order_id
+            type: int
+        - column:
+            name: amount
+            type: decimal(10,2)
+        - column:
+            name: code
+            type: varchar(50)
+    rollback:
+    - dropTable:
+        tableName: OrderAppliedTaxItem

@@ -1,0 +1,32 @@
+databaseChangeLog:
+- changeSet:
+    id: 7
+    author: BDFW
+    changes:
+    - createTable:
+        tableName: ShipmentItem
+        columns:
+        - column:
+            name: shipment_item_id
+            type: int
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: order_item_id
+            type: int
+        - column:
+            name: shipment_id
+            type: int
+        - column:
+            name: price
+            type: decimal(10,2)
+        - column:
+            name: sku
+            type: varchar(255)
+        - column:
+            name: qty
+            type: int
+    rollback:
+    - dropTable:
+        tableName: ShipmentItem
