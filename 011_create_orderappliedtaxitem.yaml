@@ -7,23 +7,92 @@ databaseChangeLog:
         tableName: OrderAppliedTaxItem
         columns:
         - column:
-            name: order_applied_tax_item_id
+            name: tax_item_id
             type: int
             constraints:
               primaryKey: true
               nullable: false
         - column:
-            name: quote_item_id
+            name: tax_summary_id
             type: int
+            constraints:
+              nullable: false
         - column:
-            name: order_id
+            name: item_id
             type: int
+            constraints:
+              nullable: false
+        - column:
+            name: tax_percent
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
         - column:
             name: amount
-            type: decimal(10,2)
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
         - column:
-            name: code
-            type: varchar(50)
+            name: base_amount
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
+        - column:
+            name: real_amount
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
+        - column:
+            name: real_base_amount
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
+        - column:
+            name: taxable_item_type
+            type: varchar(32)
+            constraints:
+              nullable: false
+        - column:
+            name: created_at
+            type: timestamp
+            constraints:
+              nullable: false
+              defaultValueComputed: "CURRENT_TIMESTAMP"
+        - column:
+            name: updated_at
+            type: timestamp
+            constraints:
+              nullable: false
+              defaultValueComputed: "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+    - addForeignKeyConstraint:
+        baseTableName: OrderAppliedTaxItem
+        baseColumnNames: tax_summary_id
+        referencedTableName: OrderAppliedTaxSummary
+        referencedColumnNames: tax_summary_id
+        constraintName: fk_ordertaxitem_summary
+    - addForeignKeyConstraint:
+        baseTableName: OrderAppliedTaxItem
+        baseColumnNames: item_id
+        referencedTableName: OrderItem
+        referencedColumnNames: item_id
+        constraintName: fk_ordertaxitem_orderitem
+    - createIndex:
+        indexName: idx_ordertaxitem_summary
+        tableName: OrderAppliedTaxItem
+        columns:
+        - column:
+            name: tax_summary_id
+    - createIndex:
+        indexName: idx_ordertaxitem_item
+        tableName: OrderAppliedTaxItem
+        columns:
+        - column:
+            name: item_id
     rollback:
     - dropTable:
         tableName: OrderAppliedTaxItem

@@ -13,26 +13,47 @@ databaseChangeLog:
               primaryKey: true
               nullable: false
         - column:
-            name: city
-            type: varchar(50)
+            name: customer_id
+            type: int
+            constraints:
+              nullable: false
         - column:
             name: customer_address_id
             type: int
         - column:
-            name: country_id
-            type: varchar(50)
+            name: address_type
+            type: varchar(20)
+            constraints:
+              nullable: false
         - column:
-            name: email
-            type: varchar(200)
+            name: company
+            type: varchar(255)
         - column:
             name: first_name
             type: varchar(100)
+            constraints:
+              nullable: false
         - column:
             name: last_name
             type: varchar(100)
+            constraints:
+              nullable: false
         - column:
-            name: post_code
+            name: street_1
+            type: varchar(100)
+            constraints:
+              nullable: false
+        - column:
+            name: street_2
+            type: varchar(100)
+        - column:
+            name: street_3
+            type: varchar(100)
+        - column:
+            name: city
             type: varchar(50)
+            constraints:
+              nullable: false
         - column:
             name: region
             type: varchar(100)
@@ -43,17 +64,61 @@ databaseChangeLog:
             name: region_id
             type: int
         - column:
-            name: street_1
-            type: varchar(100)
+            name: post_code
+            type: varchar(50)
+            constraints:
+              nullable: false
         - column:
-            name: street_2
-            type: varchar(100)
-        - column:
-            name: street_3
-            type: varchar(100)
+            name: country_id
+            type: varchar(50)
+            constraints:
+              nullable: false
         - column:
             name: telephone
             type: varchar(50)
+            constraints:
+              nullable: false
+        - column:
+            name: email
+            type: varchar(200)
+            constraints:
+              nullable: false
+        - column:
+            name: created_at
+            type: timestamp
+            constraints:
+              nullable: false
+              defaultValueComputed: "CURRENT_TIMESTAMP"
+        - column:
+            name: updated_at
+            type: timestamp
+            constraints:
+              nullable: false
+              defaultValueComputed: "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+    - addForeignKeyConstraint:
+        baseTableName: Address
+        baseColumnNames: customer_id
+        referencedTableName: Customer
+        referencedColumnNames: customer_id
+        constraintName: fk_address_customer
+    - createIndex:
+        indexName: idx_address_customer
+        tableName: Address
+        columns:
+        - column:
+            name: customer_id
+    - createIndex:
+        indexName: idx_address_email
+        tableName: Address
+        columns:
+        - column:
+            name: email
+    - createIndex:
+        indexName: idx_address_type
+        tableName: Address
+        columns:
+        - column:
+            name: address_type
     rollback:
     - dropTable:
         tableName: Address

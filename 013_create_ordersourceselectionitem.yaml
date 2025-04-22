@@ -7,23 +7,85 @@ databaseChangeLog:
         tableName: OrderSourceSelectionItem
         columns:
         - column:
-            name: order_source_selection_item_id
+            name: selection_item_id
             type: int
             constraints:
               primaryKey: true
               nullable: false
         - column:
-            name: order_source_selection_summary_id
+            name: selection_id
             type: int
+            constraints:
+              nullable: false
         - column:
             name: source_code
-            type: varchar(100)
+            type: varchar(32)
+            constraints:
+              nullable: false
         - column:
-            name: sku
-            type: varchar(255)
-        - column:
-            name: qty_to_deduct
+            name: item_id
             type: int
+            constraints:
+              nullable: false
+        - column:
+            name: qty_to_ship
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
+        - column:
+            name: qty_available
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
+        - column:
+            name: status
+            type: varchar(32)
+            constraints:
+              nullable: false
+        - column:
+            name: created_at
+            type: timestamp
+            constraints:
+              nullable: false
+              defaultValueComputed: "CURRENT_TIMESTAMP"
+        - column:
+            name: updated_at
+            type: timestamp
+            constraints:
+              nullable: false
+              defaultValueComputed: "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+    - addForeignKeyConstraint:
+        baseTableName: OrderSourceSelectionItem
+        baseColumnNames: selection_id
+        referencedTableName: OrderSourceSelectionSummary
+        referencedColumnNames: selection_id
+        constraintName: fk_ordersourceitem_summary
+    - addForeignKeyConstraint:
+        baseTableName: OrderSourceSelectionItem
+        baseColumnNames: item_id
+        referencedTableName: OrderItem
+        referencedColumnNames: item_id
+        constraintName: fk_ordersourceitem_orderitem
+    - createIndex:
+        indexName: idx_ordersourceitem_summary
+        tableName: OrderSourceSelectionItem
+        columns:
+        - column:
+            name: selection_id
+    - createIndex:
+        indexName: idx_ordersourceitem_source
+        tableName: OrderSourceSelectionItem
+        columns:
+        - column:
+            name: source_code
+    - createIndex:
+        indexName: idx_ordersourceitem_item
+        tableName: OrderSourceSelectionItem
+        columns:
+        - column:
+            name: item_id
     rollback:
     - dropTable:
         tableName: OrderSourceSelectionItem

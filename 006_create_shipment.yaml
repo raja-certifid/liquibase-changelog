@@ -15,21 +15,106 @@ databaseChangeLog:
         - column:
             name: order_id
             type: int
+            constraints:
+              nullable: false
         - column:
-            name: shipment_address_hash_key
+            name: customer_id
+            type: int
+            constraints:
+              nullable: false
+        - column:
+            name: shipping_address_hash_key
             type: binary(32)
-        - column:
-            name: created_at
-            type: datetime
-        - column:
-            name: email_sent
-            type: int
-        - column:
-            name: total_qty
-            type: int
+            constraints:
+              nullable: false
         - column:
             name: total_weight
-            type: decimal(10,2)
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
+        - column:
+            name: total_qty
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
+        - column:
+            name: shipping_method
+            type: varchar(120)
+            constraints:
+              nullable: false
+        - column:
+            name: tracking_number
+            type: varchar(64)
+        - column:
+            name: status
+            type: varchar(32)
+            constraints:
+              nullable: false
+        - column:
+            name: shipping_label
+            type: blob
+        - column:
+            name: shipping_label_url
+            type: varchar(255)
+        - column:
+            name: packages
+            type: text
+        - column:
+            name: created_at
+            type: timestamp
+            constraints:
+              nullable: false
+              defaultValueComputed: "CURRENT_TIMESTAMP"
+        - column:
+            name: updated_at
+            type: timestamp
+            constraints:
+              nullable: false
+              defaultValueComputed: "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+    - addForeignKeyConstraint:
+        baseTableName: Shipment
+        baseColumnNames: order_id
+        referencedTableName: Order
+        referencedColumnNames: order_id
+        constraintName: fk_shipment_order
+    - addForeignKeyConstraint:
+        baseTableName: Shipment
+        baseColumnNames: customer_id
+        referencedTableName: Customer
+        referencedColumnNames: customer_id
+        constraintName: fk_shipment_customer
+    - addForeignKeyConstraint:
+        baseTableName: Shipment
+        baseColumnNames: shipping_address_hash_key
+        referencedTableName: Address
+        referencedColumnNames: address_hash_key
+        constraintName: fk_shipment_address
+    - createIndex:
+        indexName: idx_shipment_order
+        tableName: Shipment
+        columns:
+        - column:
+            name: order_id
+    - createIndex:
+        indexName: idx_shipment_customer
+        tableName: Shipment
+        columns:
+        - column:
+            name: customer_id
+    - createIndex:
+        indexName: idx_shipment_tracking
+        tableName: Shipment
+        columns:
+        - column:
+            name: tracking_number
+    - createIndex:
+        indexName: idx_shipment_status
+        tableName: Shipment
+        columns:
+        - column:
+            name: status
     rollback:
     - dropTable:
         tableName: Shipment

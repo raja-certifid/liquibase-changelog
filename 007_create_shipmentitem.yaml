@@ -13,20 +13,99 @@ databaseChangeLog:
               primaryKey: true
               nullable: false
         - column:
-            name: order_item_id
-            type: int
-        - column:
             name: shipment_id
             type: int
+            constraints:
+              nullable: false
         - column:
-            name: price
-            type: decimal(10,2)
+            name: order_item_id
+            type: int
+            constraints:
+              nullable: false
+        - column:
+            name: product_id
+            type: int
+            constraints:
+              nullable: false
+        - column:
+            name: name
+            type: varchar(255)
+            constraints:
+              nullable: false
         - column:
             name: sku
-            type: varchar(255)
+            type: varchar(64)
+            constraints:
+              nullable: false
+        - column:
+            name: weight
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
         - column:
             name: qty
-            type: int
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
+        - column:
+            name: price
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
+        - column:
+            name: row_total
+            type: decimal(12,4)
+            constraints:
+              nullable: false
+              defaultValueNumeric: 0.0000
+        - column:
+            name: additional_data
+            type: text
+        - column:
+            name: created_at
+            type: timestamp
+            constraints:
+              nullable: false
+              defaultValueComputed: "CURRENT_TIMESTAMP"
+        - column:
+            name: updated_at
+            type: timestamp
+            constraints:
+              nullable: false
+              defaultValueComputed: "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+    - addForeignKeyConstraint:
+        baseTableName: ShipmentItem
+        baseColumnNames: shipment_id
+        referencedTableName: Shipment
+        referencedColumnNames: shipment_id
+        constraintName: fk_shipmentitem_shipment
+    - addForeignKeyConstraint:
+        baseTableName: ShipmentItem
+        baseColumnNames: order_item_id
+        referencedTableName: OrderItem
+        referencedColumnNames: item_id
+        constraintName: fk_shipmentitem_orderitem
+    - createIndex:
+        indexName: idx_shipmentitem_shipment
+        tableName: ShipmentItem
+        columns:
+        - column:
+            name: shipment_id
+    - createIndex:
+        indexName: idx_shipmentitem_orderitem
+        tableName: ShipmentItem
+        columns:
+        - column:
+            name: order_item_id
+    - createIndex:
+        indexName: idx_shipmentitem_sku
+        tableName: ShipmentItem
+        columns:
+        - column:
+            name: sku
     rollback:
     - dropTable:
         tableName: ShipmentItem
